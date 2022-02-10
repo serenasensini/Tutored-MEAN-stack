@@ -1,0 +1,44 @@
+#content{
+  min-height: 100%;
+  width: 100%;
+  margin-bottom: -271px;
+  display: table;
+  padding: 100px 0;
+}
+
+app-header,
+router-outlet,
+footer{
+  display: table-row;
+}
+
+router-outlet {
+  position: absolute;
+}
+
+app-header{
+  height: 3em;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+app-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px;
+}
+
+.content{
+  padding: 5em 3em;
+}

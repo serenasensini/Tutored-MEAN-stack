@@ -1,0 +1,43 @@
+version: "3.5"
+services:
+  frontend:
+    container_name: frontend
+    restart: always
+    build: frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      backend:
+        condition: service_healthy
+  backend:
+    container_name: backend
+    restart: always
+    build: backend
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 20s
+      timeout: 200s
+      retries: 5
+    depends_on:
+      mongo:
+        condition: service_healthy
+  mongo:
+    container_name: mongo
+    image: mongo
+    command: mongod --port 27019
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - "27019:27019"
+    environment:
+      MONGO_INITDB_DATABASE: mydb
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: root
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27019/mydb --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s

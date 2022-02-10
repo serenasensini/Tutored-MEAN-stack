@@ -1,0 +1,24 @@
+/* Structure */
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.content{
+  padding: 0 3em;
+}
+
+.header{
+  margin-bottom: 3em;
+}
+
+
+.add-button{
+  position: fixed;
+  right: 33px;
+  bottom: 33px;
+}
