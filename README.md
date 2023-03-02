@@ -11,4 +11,4 @@ Codice relativo alla sessione di Live coding su come creare una webapp basata su
 
 Esegui il comando:
 
-docker-compose up
+`docker-compose up`
