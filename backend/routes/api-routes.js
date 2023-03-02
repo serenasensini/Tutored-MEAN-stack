@@ -1,7 +1,7 @@
 let router = require('express').Router();
 router.get('/', function (req, res) {
     res.json({
-        status: 'Users API is working',
+        status: 200,
         message: 'Welcome to webapp crafted with love!',
     });
 });

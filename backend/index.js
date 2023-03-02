@@ -10,8 +10,17 @@ app.use(cors())
 
 // STEP 4: definire collegamento al db
 
-// test locale
-mongoose.connect('mongodb://localhost:27017/mydb', { useNewUrlParser: true});
+const connectionOptions = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+   }
+   
+try {
+  mongoose.connect('mongodb://mongo:27017/mydb',connectionOptions)
+  console.log('Connected to MongoDB')
+} catch (err) {
+  console.log('Couldnt connect:', err);
+}
 
 var db = mongoose.connection;
 

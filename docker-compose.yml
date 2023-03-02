@@ -16,9 +16,9 @@ services:
     ports:
       - "8081:8081"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/"]
       interval: 20s
-      timeout: 200s
+      timeout: 60s
       retries: 5
     depends_on:
       mongo:
@@ -26,18 +26,21 @@ services:
   mongo:
     container_name: mongo
     image: mongo
-    command: mongod --port 27019
+    command: mongod --port 27017
     volumes:
-      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - dbdata:/data/db
     ports:
-      - "27019:27019"
+      - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: mydb
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongo:27019/mydb --quiet
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/mydb --quiet
       interval: 10s
-      timeout: 10s
+      timeout: 20s
       retries: 5
       start_period: 40s
+volumes:
+  dbdata:
+    driver: local
